@@ -5,6 +5,7 @@ import io from "socket.io-client";
 //http://192.168.0.104:5000
 //https://chat-app-u2cq.onrender.com
 // http://localhost:5000
+// TODO: Update this URL to your Render backend URL after deployment
 const hostName = "https://chat-app-u2cq.onrender.com";
 var socket = io(hostName);
 

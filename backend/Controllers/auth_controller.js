@@ -89,7 +89,7 @@ const register = async (req, res) => {
       },
     };
 
-    const authtoken = jwt.sign(data, JWT_SECRET);
+    const authtoken = jwt.sign(data, JWT_SECRET, { expiresIn: "7d" });
     res.json({
       authtoken,
     });
@@ -144,7 +144,7 @@ const login = async (req, res) => {
       },
     };
 
-    const authtoken = jwt.sign(data, JWT_SECRET);
+    const authtoken = jwt.sign(data, JWT_SECRET, { expiresIn: "7d" });
     res.json({
       authtoken,
       user: {
@@ -221,7 +221,12 @@ const updateprofile = async (req, res) => {
       delete req.body.oldpassword;
       delete req.body.newpassword;
     }
-    await User.findByIdAndUpdate(req.user.id, req.body);
+    const allowedFields = {};
+    if (req.body.name !== undefined) allowedFields.name = req.body.name;
+    if (req.body.about !== undefined) allowedFields.about = req.body.about;
+    if (req.body.profilePic !== undefined) allowedFields.profilePic = req.body.profilePic;
+    if (req.body.password !== undefined) allowedFields.password = req.body.password;
+    await User.findByIdAndUpdate(req.user.id, allowedFields);
     res.status(200).json({ message: "Profile Updated" });
   } catch (error) {
     res.status(500).send("Internal Server Error");
