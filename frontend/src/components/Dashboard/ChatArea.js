@@ -42,7 +42,7 @@ const scrollbarconfig = {
 };
 
 const markdownToHtml = (markdownText) => {
-  const html = marked(markdownText);
+  const html = marked(markdownText || "");
   return { __html: html };
 };
 
