@@ -4,6 +4,7 @@ dotenv.config({ path: "./.env" });
 
 const connectDB = async () => {
   try {
+    console.log("Connecting to:", process.env.MONGO_URI?.replace(/:([^@]+)@/, ':****@'));
     const conn = await mongoose.connect(process.env.MONGO_URI, {
       dbName: "conversa-chatapp",
     });
